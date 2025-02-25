@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Underwater Math Adventure!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ADD8E6; /* Light Blue */
+            text-align: center;
+            color: #000080; /* Dark Blue */
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #008080; /* Teal */
+            text-shadow: 2px 2px 4px #000000;
+        }
+        #problem {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #FFA500; /* Orange */
+            text-shadow: 1px 1px 2px #000000;
+        }
+        input[type="text"] {
+            padding: 15px;
+            font-size: 1.5em;
+            border: 2px solid #4682B4; /* Steel Blue */
+            border-radius: 10px;
+            text-align: center;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            cursor: pointer;
+            background-color: #40E0D0; /* Turquoise */
+            color: #000080; /* Dark Blue */
+            border: none;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px #888888;
+        }
+        button:hover {
+            background-color: #20B2AA; /* Aquamarine */
+        }
+        .spacedButton {
+            margin-bottom: 20px;
+        }
+        #feedback {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #8B4513; /* Saddle Brown */
+        }
+        #celebration {
+            display: none;
+            font-size: 3em;
+            color: green;
+            animation: fadeInOut 2s infinite;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @keyframes swim {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100vw); }
+        }
+        #score {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #006400; /* Dark Green */
+        }
+        #nameInput {
+            margin-bottom: 50px;
+        }
+        #nameInput label {
+            font-size: 1.5em;
+            color: #000080;
+        }
+        #nameInput input[type="text"] {
+            padding: 15px;
+            font-size: 1.5em;
+        }
+        #gameContent {
+            display: none; /* Initially hide the game content */
+            padding: 20px;
+            border: 2px solid #4682B4;
+            border-radius: 15px;
+            margin: 30px auto;
+            width: 80%;
+            background-color: #E0FFFF; /* Light Cyan */
+        }
+        #skipButton {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            background-color: #FFA07A; /* Light Salmon */
+            color: #000080;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px #888888;
+            margin-top: 10px;
+        }
+        #skipped {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #8B4513; /* Saddle Brown */
+        }
+
+        /* Media Queries for Mobile Optimization */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            #problem {
+                font-size: 2em;
+            }
+            input[type="text"], button {
+                font-size: 1.2em;
+                padding: 10px;
+            }
+            #feedback, #score {
+                font-size: 1.2em;
+            }
+            #nameInput label {
+                font-size: 1.2em;
+            }
+            #nameInput input[type="text"] {
+                font-size: 1.2em;
+                padding: 10px;
+            }
+            #gameContent {
+                width: 95%;
+                margin: 10px auto;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Underwater Math Adventure!</h1>
+    <div id="nameInput">
+        <label for="userName">Enter your name, future marine biologist:</label>
+        <input type="text" id="userName" placeholder="Your Name">
+        <br><br>
+        <label>Select your grade:</label><br>
+        <input type="radio" id="grade3" name="grade" value="3">
+        <label for="grade3">3rd Grade</label>
+        <input type="radio" id="grade4" name="grade" value="4">
+        <label for="grade4">4th Grade</label>
+        <input type="radio" id="grade5" name="grade" value="5" checked>
+        <label for="grade5">5th Grade</label><br><br>
+        <button onclick="startGame()">Dive In!</button>
+    </div>
+
+    <div id="gameContent">
+        <div id="problem"></div>
+        <input type="text" id="answer" placeholder="Enter your answer, matey!" onkeypress="handleKeyPress(event)">
+        <button id="skipButton" class="spacedButton" onclick="skipProblem()">Skip</button>
+        <button class="spacedButton" onclick="checkAnswer()">Submit</button>
+        <div id="feedback"></div>
+        <div id="celebration">🎉 Correct, you found treasure! 🎉</div>
+        <div id="score">
+            Correct: <span id="correctCount">0</span> | Incorrect: <span id="incorrectCount">0</span>
+        </div>
+        <div id="skipped">
+            Skipped: <span id="skippedCount">0</span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
