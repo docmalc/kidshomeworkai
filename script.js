@@ -56,7 +56,7 @@ function generateScienceProblem() {
 
     const problem = scienceProblems[Math.floor(Math.random() * scienceProblems.length)];
     document.getElementById("problem").innerText = problem.question;
-    answer = problem.answer; // Set the global answer variable
+    global.answer = problem.answer; // Set the global answer variable
 }
 
 function startGame() {
@@ -76,7 +76,8 @@ function startGame() {
     if (category === "science" && grade === "5") {
         generateScienceProblem();
     } else {
-        generateProblem();
+        // Do nothing - don't call generateProblem()
+        document.getElementById("problem").innerText = "This should only show science problems"; // Add a debug message
     }
 }
 
@@ -92,7 +93,7 @@ function generateProblem() {
             denA = Math.floor(Math.random() * 5) + 2;
             numB = Math.floor(Math.random() * 5) + 1;
             denB = Math.floor(Math.random() * 5) + 2;
-            answer = (numA / denA) + (numB / denB);
+            global.answer = (numA / denA) + (numB / denB);
             document.getElementById("problem").innerText = `${numA}/${denA} + ${numB}/${denB} = ?`;
             break;
         case 'subtractFractions':
@@ -100,7 +101,7 @@ function generateProblem() {
             denA = Math.floor(Math.random() * 5) + 2;
             numB = Math.floor(Math.random() * 5) + 1;
             denB = Math.floor(Math.random() * 5) + 2;
-            answer = (numA / denA) - (numB / denB);
+            global.answer = (numA / denA) - (numB / denB);
             document.getElementById("problem").innerText = `${numA}/${denA} - ${numB}/${denB} = ?`;
             break;
         case 'multiplyFractions':
@@ -108,7 +109,7 @@ function generateProblem() {
             denA = Math.floor(Math.random() * 5) + 2;
             numB = Math.floor(Math.random() * 5) + 1;
             denB = Math.floor(Math.random() * 5) + 2;
-            answer = (numA / denA) * (numB / denB);
+            global.answer = (numA / denA) * (numB / denB);
             document.getElementById("problem").innerText = `${numA}/${denA} * ${numB}/${denB} = ?`;
             break;
         case 'divideFractions':
@@ -116,7 +117,7 @@ function generateProblem() {
             denA = Math.floor(Math.random() * 5) + 2;
             numB = Math.floor(Math.random() * 5) + 1;
             denB = Math.floor(Math.random() * 5) + 2;
-            answer = (numA / denA) / (numB / denB);
+            global.answer = (numA / denA) / (numB / denB);
             document.getElementById("problem").innerText = `${numA}/${denA} ÷ ${numB}/${denB} = ?`;
             break;
         case 'mixedNumbers':
@@ -125,7 +126,7 @@ function generateProblem() {
             denA = Math.floor(Math.random() * 5) + 2; // Denominator of fraction
             numB = Math.floor(Math.random() * 5) + 1; // Numerator of second fraction
             denB = Math.floor(Math.random() * 5) + 2; // Denominator of second fraction
-            answer = wholeNum + (numA / denA) + (numB/ denB);
+            global.answer = wholeNum + (numA / denA) + (numB/ denB);
             document.getElementById("problem").innerText = `${wholeNum} ${numA}/${denA} + ${numB}/${denB} = ?`;
             break;
     }
@@ -136,6 +137,11 @@ function checkAnswer() {
     const feedbackDiv = document.getElementById("feedback");
     const celebrationDiv = document.getElementById("celebration");
     const category = document.querySelector('input[name="category"]:checked').value;
+
+    console.log("checkAnswer() called");
+    console.log("category: " + category);
+    console.log("userAnswer: " + userAnswer);
+    console.log("answer: " + answer);
 
     if (!userAnswer) {
         feedbackDiv.innerText = "Please enter an answer.";
