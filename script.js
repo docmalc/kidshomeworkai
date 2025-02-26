@@ -73,6 +73,10 @@ function startGame() {
     document.getElementById("gameContent").style.display = "block";
     setUnderwaterBackground(); // Set the background when the game starts
 
+    const category = document.querySelector('input[name="category"]:checked').value;
+    console.log("Grade: " + grade);
+    console.log("Category: " + category);
+
     if (category === "science" && grade === "5") {
         generateScienceProblem();
     } else if (category === "math") {
