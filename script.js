@@ -25,6 +25,7 @@ function playSound(soundURL) {
 }
 
 function generateScienceProblem() {
+    console.log("generateScienceProblem() is being called!");
     const scienceProblems = [
         { question: "Melting ice is a ______ change.", answer: "physical" },
         { question: "Burning wood is a ______ change.", answer: "chemical" },

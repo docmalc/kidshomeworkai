@@ -141,6 +141,7 @@
     </style>
 </head>
 <body>
+    <div id="debug"></div>
     <h1>Underwater Math Adventure!</h1>
     <div id="nameInput">
         <label for="userName">Enter your name, future marine biologist:</label>
@@ -175,6 +176,11 @@
             Skipped: <span id="skippedCount">0</span>
         </div>
     </div>
+    <script>
+    console.log = function(message) {
+        document.getElementById('debug').innerHTML += message + '<br>';
+    };
+</script>
     <script src="script.js"></script>
 </body>
 </html>
