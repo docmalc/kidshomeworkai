@@ -75,6 +75,8 @@ function startGame() {
 
     if (category === "science" && grade === "5") {
         generateScienceProblem();
+    } else if (category === "math") {
+        generateProblem();
     } else {
         // Do nothing - don't call generateProblem()
         document.getElementById("problem").innerText = "This should only show science problems"; // Add a debug message
