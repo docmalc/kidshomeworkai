@@ -84,7 +84,7 @@ function startGame() {
 function generateProblem() {
     wrongAttempts = 0; // Reset wrong attempts counter for the new problem
     document.getElementById("skipButton").style.display = "none"; // Hide the skip button
-    const operations = ['addFractions', 'subtractFractions', 'multiplyFractions', 'divideFractions', 'mixedNumbers'];
+    const operations = ['addFractions', 'subtractFractions', 'multiplyFractions', 'divideFractions', 'mixedNumbers', 'wordProblemFractions'];
     problemType = operations[Math.floor(Math.random() * operations.length)];
 
     switch (problemType) {
@@ -128,6 +128,25 @@ function generateProblem() {
             denB = Math.floor(Math.random() * 5) + 2; // Denominator of second fraction
             global.answer = wholeNum + (numA / denA) + (numB/ denB);
             document.getElementById("problem").innerText = `${wholeNum} ${numA}/${denA} + ${numB}/${denB} = ?`;
+            break;
+        case 'wordProblemFractions':
+            const wordProblems = [
+                {
+                    question: "Sarah baked a pie and ate 1/4 of it. John ate 2/8 of the same pie. How much of the pie did they eat altogether?",
+                    answer: 0.5
+                },
+                {
+                    question: "A recipe calls for 2/3 cup of flour. You only want to make half of the recipe. How much flour do you need?",
+                    answer: 0.3333333333333333
+                },
+                {
+                    question: "Tom has 1 1/2 pizzas. He eats 2/4 of a pizza. How much pizza does Tom have left?",
+                    answer: 1
+                }
+            ];
+            const problem = wordProblems[Math.floor(Math.random() * wordProblems.length)];
+            document.getElementById("problem").innerText = problem.question;
+            global.answer = problem.answer;
             break;
     }
 }
