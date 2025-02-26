@@ -30,7 +30,27 @@ function generateScienceProblem() {
         { question: "Burning wood is a ______ change.", answer: "chemical" },
         { question: "Rusting iron is a ______ change.", answer: "chemical" },
         { question: "Boiling water is a ______ change.", answer: "physical" },
-        { question: "Cooking an egg is a ______ change.", answer: "chemical" }
+        { question: "Cooking an egg is a ______ change.", answer: "chemical" },
+        { question: "Dissolving sugar in water is a ______ change.", answer: "physical" },
+        { question: "Baking a cake is a ______ change.", answer: "chemical" },
+        { question: "Freezing water is a ______ change.", answer: "physical" },
+        { question: "Digesting food is a ______ change.", answer: "chemical" },
+        { question: "Cutting paper is a ______ change.", answer: "physical" },
+        { question: "Burning gasoline is a ______ change.", answer: "chemical" },
+        { question: "Evaporating water is a ______ change.", answer: "physical" },
+        { question: "Mixing vinegar and baking soda is a ______ change.", answer: "chemical" },
+        { question: "Crushing a can is a ______ change.", answer: "physical" },
+        { question: "Souring milk is a ______ change.", answer: "chemical" },
+        { question: "Sublimation of dry ice is a ______ change.", answer: "physical" },
+        { question: "Neutralizing an acid with a base is a ______ change.", answer: "chemical" },
+        { question: "Breaking glass is a ______ change.", answer: "physical" },
+        { question: "Photosynthesis is a ______ change.", answer: "chemical" },
+        { question: "Melting butter is a ______ change.", answer: "physical" },
+        { question: "Exploding dynamite is a ______ change.", answer: "chemical" },
+        { question: "Condensation of water vapor is a ______ change.", answer: "physical" },
+        { question: "Fermentation is a ______ change.", answer: "chemical" },
+        { question: "Sharpening a pencil is a ______ change.", answer: "physical" },
+        { question: "Tarnishing silver is a ______ change.", answer: "chemical" }
     ];
 
     const problem = scienceProblems[Math.floor(Math.random() * scienceProblems.length)];
