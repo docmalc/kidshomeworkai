@@ -131,9 +131,10 @@ function generateProblem() {
 }
 
 function checkAnswer() {
-    const userAnswer = document.getElementById("answer").value.trim(); // Get user input and remove leading/trailing spaces
+    const userAnswer = document.getElementById("answer").value.trim();
     const feedbackDiv = document.getElementById("feedback");
     const celebrationDiv = document.getElementById("celebration");
+    const category = document.querySelector('input[name="category"]:checked').value;
 
     if (!userAnswer) {
         feedbackDiv.innerText = "Please enter an answer.";
@@ -141,33 +142,57 @@ function checkAnswer() {
         return;
     }
 
-    let parsedAnswer = parseAnswer(userAnswer);
+    if (category === "science") {
+        if (userAnswer.toLowerCase() === answer.toLowerCase()) {
+            feedbackDiv.innerText = "Great job, " + userName + "!";
+            celebrationDiv.style.display = "block";
+            correctCount++;
+            document.getElementById("correctCount").innerText = correctCount;
+            generateScienceProblem();
+            document.getElementById("answer").value = "";
+            playSound(correctSound);
+        } else {
+            wrongAttempts++;
+            feedbackDiv.innerText = "Not quite, " + userName + ", try again!";
+            celebrationDiv.style.display = "none";
+            incorrectCount++;
+            document.getElementById("incorrectCount").innerText = incorrectCount;
+            document.getElementById("answer").value = "";
+            playSound(incorrectSound);
 
-    if (isNaN(parsedAnswer)) {
-        feedbackDiv.innerText = "Please enter a valid number or fraction.";
-        celebrationDiv.style.display = "none";
-        return;
-    }
-
-    if (Math.abs(parsedAnswer - answer) < 0.01) {
-        feedbackDiv.innerText = "Great job, " + userName + "!"; // Personalized message
-        celebrationDiv.style.display = "block";
-        correctCount++;
-        document.getElementById("correctCount").innerText = correctCount;
-        generateProblem();
-        document.getElementById("answer").value = "";
-        playSound(correctSound); // Play correct sound
+            if (wrongAttempts >= 2) {
+                document.getElementById("skipButton").style.display = "block";
+            }
+        }
     } else {
-        wrongAttempts++; // Increment wrong attempts counter
-        feedbackDiv.innerText = "Not quite, " + userName + ", try again!"; // Personalized message
-        celebrationDiv.style.display = "none";
-        incorrectCount++;
-        document.getElementById("incorrectCount").innerText = incorrectCount;
-        document.getElementById("answer").value = ""; // Clear the input field on incorrect answer
-        playSound(incorrectSound); // Play incorrect sound
+        let parsedAnswer = parseAnswer(userAnswer);
 
-        if (wrongAttempts >= 2) {
-            document.getElementById("skipButton").style.display = "block"; // Show skip button
+        if (isNaN(parsedAnswer)) {
+            feedbackDiv.innerText = "Please enter a valid number or fraction.";
+            celebrationDiv.style.display = "none";
+            return;
+        }
+
+        if (Math.abs(parsedAnswer - answer) < 0.01) {
+            feedbackDiv.innerText = "Great job, " + userName + "!";
+            celebrationDiv.style.display = "block";
+            correctCount++;
+            document.getElementById("correctCount").innerText = correctCount;
+            generateProblem();
+            document.getElementById("answer").value = "";
+            playSound(correctSound);
+        } else {
+            wrongAttempts++;
+            feedbackDiv.innerText = "Not quite, " + userName + ", try again!";
+            celebrationDiv.style.display = "none";
+            incorrectCount++;
+            document.getElementById("incorrectCount").innerText = incorrectCount;
+            document.getElementById("answer").value = "";
+            playSound(incorrectSound);
+
+            if (wrongAttempts >= 2) {
+                document.getElementById("skipButton").style.display = "block";
+            }
         }
     }
 }
