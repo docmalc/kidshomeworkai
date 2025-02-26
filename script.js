@@ -24,6 +24,20 @@ function playSound(soundURL) {
     audio.play();
 }
 
+function generateScienceProblem() {
+    const scienceProblems = [
+        { question: "Melting ice is a ______ change.", answer: "physical" },
+        { question: "Burning wood is a ______ change.", answer: "chemical" },
+        { question: "Rusting iron is a ______ change.", answer: "chemical" },
+        { question: "Boiling water is a ______ change.", answer: "physical" },
+        { question: "Cooking an egg is a ______ change.", answer: "chemical" }
+    ];
+
+    const problem = scienceProblems[Math.floor(Math.random() * scienceProblems.length)];
+    document.getElementById("problem").innerText = problem.question;
+    answer = problem.answer; // Set the global answer variable
+}
+
 function startGame() {
     userName = document.getElementById("userName").value.trim();
     if (userName === "") {
@@ -31,10 +45,18 @@ function startGame() {
         return;
     }
 
+    const grade = document.querySelector('input[name="grade"]:checked').value;
+    const category = document.querySelector('input[name="category"]:checked').value;
+
     document.getElementById("nameInput").style.display = "none";
     document.getElementById("gameContent").style.display = "block";
     setUnderwaterBackground(); // Set the background when the game starts
-    generateProblem();
+
+    if (category === "science" && grade === "5") {
+        generateScienceProblem();
+    } else {
+        generateProblem();
+    }
 }
 
 function generateProblem() {
