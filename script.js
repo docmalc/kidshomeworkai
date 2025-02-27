@@ -1,181 +1,123 @@
-// script.js (modified)
-let problemType, numA, denA, numB, denB, wholeNum, answer;
-let correctCount = 0;
-let incorrectCount = 0;
-let skippedCount = 0; // Counter for skipped problems
-let wrongAttempts = 0; // Counter for wrong attempts on the current problem
-let userName = ""; // Variable to store the user's name
-
-// Placeholder audio URLs (replace with actual audio file URLs)
-const correctSound = "placeholder_correct.mp3";
-const incorrectSound = "placeholder_incorrect.mp3";
-
-function setUnderwaterBackground() {
-    // Base64 encoded image (replace with a real image URL for better quality)
-    const underwaterImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w+rAI0wU2wf1vwECLvOyfgqjEQAAAABJRU5ErkJggg==";
-
-    document.body.style.backgroundImage = `url('${underwaterImage}')`;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundRepeat = "no-repeat";
-}
-
-function playSound(soundURL) {
-    const audio = new Audio(soundURL);
-    audio.play();
-}
+let userName = "";
+let questions = [];
+let currentQuestionIndex = 0;
+let score = 0;
+let answer = "";
 
 function startGame() {
-    userName = document.getElementById("userName").value.trim();
-    if (userName === "") {
-        alert("Please enter your name!");
-        return;
+    userName = document.getElementById("name").value;
+    document.getElementById("name-input").style.display = "none";
+    document.getElementById("game-area").style.display = "block";
+    questions = [
+        {question: "Is rusting iron a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is melting ice a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is burning wood a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is dissolving sugar in water a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is crushing a can a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is cooking an egg a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is tearing paper a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is boiling water a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is baking a cake a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is grinding coffee beans a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is sublimation of dry ice a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the digestion of food a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the fermentation of grapes into wine a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the photosynthesis in plants a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the magnetization of a nail a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the electrolysis of water a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the explosion of fireworks a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the condensation of water vapor a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the burning of gasoline in a car engine a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the souring of milk a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the tarnishing of silver a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the ripening of fruit a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the rusting of a bicycle chain a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the bleaching of hair a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the dissolving of salt in water a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the freezing of water to ice a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the breaking of a glass window a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the bending of a metal rod a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the crumpling of a piece of paper a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the hammering of metal into a sheet a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the cutting of grass with a lawnmower a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the shaping of clay into a pot a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the melting of butter on toast a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the shattering of a ceramic plate a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the evaporation of alcohol a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the condensation of dew on grass a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the freezing of a lake in winter a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the grinding of wheat into flour a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the dissolving of carbon dioxide in water a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the dissolving of oxygen in water a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the dissolving of fertilizer in water a physical or chemical change?", answer: "physical", options: ["physical", "chemical"]},
+        {question: "Is the burning of a candle a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the explosion of dynamite a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the cooking of meat a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the frying of an egg a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the baking of bread a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the burning of leaves a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]},
+        {question: "Is the rusting of a car a physical or chemical change?", answer: "chemical", options: ["physical", "chemical"]}
+    ];
+
+    // Shuffle questions array (Fisher-Yates shuffle)
+    for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
     }
 
-    document.getElementById("nameInput").style.display = "none";
-    document.getElementById("gameContent").style.display = "block";
-    setUnderwaterBackground(); // Set the background when the game starts
-    generateProblem();
+    loadQuestion();
 }
 
-function generateProblem() {
-    wrongAttempts = 0; // Reset wrong attempts counter for the new problem
-    document.getElementById("skipButton").style.display = "none"; // Hide the skip button
-    const operations = ['addFractions', 'subtractFractions', 'multiplyFractions', 'divideFractions', 'mixedNumbers'];
-    problemType = operations[Math.floor(Math.random() * operations.length)];
-
-    switch (problemType) {
-        case 'addFractions':
-            numA = Math.floor(Math.random() * 5) + 1;
-            denA = Math.floor(Math.random() * 5) + 2;
-            numB = Math.floor(Math.random() * 5) + 1;
-            denB = Math.floor(Math.random() * 5) + 2;
-            answer = (numA / denA) + (numB / denB);
-            document.getElementById("problem").innerText = `${numA}/${denA} + ${numB}/${denB} = ?`;
-            break;
-        case 'subtractFractions':
-            numA = Math.floor(Math.random() * 5) + 1;
-            denA = Math.floor(Math.random() * 5) + 2;
-            numB = Math.floor(Math.random() * 5) + 1;
-            denB = Math.floor(Math.random() * 5) + 2;
-            answer = (numA / denA) - (numB / denB);
-            document.getElementById("problem").innerText = `${numA}/${denA} - ${numB}/${denB} = ?`;
-            break;
-        case 'multiplyFractions':
-            numA = Math.floor(Math.random() * 5) + 1;
-            denA = Math.floor(Math.random() * 5) + 2;
-            numB = Math.floor(Math.random() * 5) + 1;
-            denB = Math.floor(Math.random() * 5) + 2;
-            answer = (numA / denA) * (numB / denB);
-            document.getElementById("problem").innerText = `${numA}/${denA} * ${numB}/${denB} = ?`;
-            break;
-        case 'divideFractions':
-            numA = Math.floor(Math.random() * 5) + 1;
-            denA = Math.floor(Math.random() * 5) + 2;
-            numB = Math.floor(Math.random() * 5) + 1;
-            denB = Math.floor(Math.random() * 5) + 2;
-            answer = (numA / denA) / (numB / denB);
-            document.getElementById("problem").innerText = `${numA}/${denA} ÷ ${numB}/${denB} = ?`;
-            break;
-        case 'mixedNumbers':
-            wholeNum = Math.floor(Math.random() * 5) + 1; // Whole number part
-            numA = Math.floor(Math.random() * 5) + 1; // Numerator of fraction
-            denA = Math.floor(Math.random() * 5) + 2; // Denominator of fraction
-            numB = Math.floor(Math.random() * 5) + 1; // Numerator of second fraction
-            denB = Math.floor(Math.random() * 5) + 2; // Denominator of second fraction
-            answer = wholeNum + (numA / denA) + (numB/ denB);
-            document.getElementById("problem").innerText = `${wholeNum} ${numA}/${denA} + ${numB}/${denB} = ?`;
-            break;
+function loadQuestion() {
+    if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
+        document.getElementById("question").textContent = currentQuestion.question;
+        document.getElementById("answer1-label").textContent = currentQuestion.options[0];
+        document.getElementById("answer2-label").textContent = currentQuestion.options[1];
+        document.getElementById("answer1").value = currentQuestion.options[0];
+        document.getElementById("answer2").value = currentQuestion.options[1];
+        answer = currentQuestion.answer;
+    } else {
+        endGame();
     }
 }
 
 function checkAnswer() {
-    const userAnswer = document.getElementById("answer").value.trim(); // Get user input and remove leading/trailing spaces
-    const feedbackDiv = document.getElementById("feedback");
-    const celebrationDiv = document.getElementById("celebration");
-
-    if (!userAnswer) {
-        feedbackDiv.innerText = "Please enter an answer.";
-        celebrationDiv.style.display = "none";
-        return;
-    }
-
-    let parsedAnswer = parseAnswer(userAnswer);
-
-    if (isNaN(parsedAnswer)) {
-        feedbackDiv.innerText = "Please enter a valid number or fraction.";
-        celebrationDiv.style.display = "none";
-        return;
-    }
-
-    if (Math.abs(parsedAnswer - answer) < 0.01) {
-        feedbackDiv.innerText = "Great job, " + userName + "!"; // Personalized message
-        celebrationDiv.style.display = "block";
-        correctCount++;
-        document.getElementById("correctCount").innerText = correctCount;
-        generateProblem();
-        document.getElementById("answer").value = "";
-        playSound(correctSound); // Play correct sound
+    let selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+    let resultArea = document.getElementById("result-area");
+    if (selectedAnswer === answer) {
+        const positiveMessages = [
+            "Great job, " + userName + "!",
+            "You got it right!",
+            "Fantastic!",
+            "Awesome!",
+            "You're a science whiz!"
+        ];
+        const randomPositiveMessage = positiveMessages[Math.floor(Math.random() * positiveMessages.length)];
+        resultArea.textContent = randomPositiveMessage;
+        score++;
     } else {
-        wrongAttempts++; // Increment wrong attempts counter
-        feedbackDiv.innerText = "Not quite, " + userName + ", try again!"; // Personalized message
-        celebrationDiv.style.display = "none";
-        incorrectCount++;
-        document.getElementById("incorrectCount").innerText = incorrectCount;
-        document.getElementById("answer").value = ""; // Clear the input field on incorrect answer
-        playSound(incorrectSound); // Play incorrect sound
-
-        if (wrongAttempts >= 2) {
-            document.getElementById("skipButton").style.display = "block"; // Show skip button
-        }
+        const encouragingMessages = [
+            "Not quite, " + userName + ", but keep trying!",
+            "That's okay! You'll get the next one.",
+            "Good try! Don't give up.",
+            "Almost there!",
+            "Keep going, you can do it!"
+        ];
+        const randomEncouragingMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
+        resultArea.textContent = randomEncouragingMessage + " The correct answer was " + answer;
     }
+    currentQuestionIndex++;
+    document.getElementById("answer-form").reset();
+    loadQuestion();
+    updateScore();
 }
 
-function skipProblem() {
-    skippedCount++; // Increment skipped count
-    document.getElementById("skippedCount").innerText = skippedCount; // Update skipped count in HTML
-    generateProblem(); // Generate new problem
+function updateScore() {
+     document.getElementById("score-area").textContent = "Score: " + score + "/" + questions.length;
 }
 
-function parseAnswer(answerString) {
-    // Handle decimal input
-    if (answerString.includes('.')) {
-        return parseFloat(answerString);
-    }
-
-    // Handle fraction input (e.g., "1/2")
-    if (answerString.includes('/')) {
-        const [num, den] = answerString.split('/').map(Number);
-        if (isNaN(num) || isNaN(den) || den === 0) {
-            return NaN; // Invalid fraction
-        }
-        return num / den;
-    }
-
-    // Handle mixed number input (e.g., "1 1/2")
-    if (answerString.includes(' ')) {
-        const [whole, fraction] = answerString.split(' ');
-        if (fraction.includes('/')) {
-            const [num, den] = fraction.split('/').map(Number);
-            if (isNaN(whole) || isNaN(num) || isNaN(den) || den === 0) {
-                return NaN; // Invalid mixed number
-            }
-            return parseFloat(whole) + (num / den);
-        } else {
-            return NaN; // Invalid mixed number format
-        }
-    }
-
-    // Handle whole number input
-    const num = parseFloat(answerString);
-    if (!isNaN(num)) {
-        return num;
-    }
-
-    return NaN; // Invalid input
-}
-
-function handleKeyPress(event) {
-    if (event.key === "Enter") {
-        checkAnswer();
-    }
+function endGame() {
+    document.getElementById("question-area").style.display = "none";
+    document.getElementById("result-area").textContent = "Game Over! Your final score is " + score + "/" + questions.length;
 }
